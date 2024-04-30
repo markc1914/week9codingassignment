@@ -5,7 +5,7 @@
 const aceValue = 14;
 //face cards are 11-13 and Ace is 14
 const validNumbers = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-const suits = ['spades', 'diamonds', 'clubs', 'hearts'];
+const suits = ['♠️', '♦️', '♣️', '❤️'];
 
 class Card {
   /**
@@ -18,6 +18,24 @@ class Card {
       this.cardSuit = suit;
   }
 
+  /**
+   * properly displays face cards
+   * @returns the card number or name if it's a face card
+   */
+  getCardNumber() {
+    switch(this.cardNumber) {
+      case 11 :
+        return 'Jack';
+      case 12 :
+        return 'Queen';
+      case 13 :
+        return 'King';
+      case 14 :
+        return 'Ace';
+      default :
+      return this.cardNumber
+    }
+  }
 }
 
 class Deck {
@@ -38,7 +56,7 @@ class Deck {
    */
   printDeck() {
     for (let i = 0; i < this.cards.length; i++){
-      console.log(`${this.cards[i].cardNumber} of ${this.cards[i].cardSuit}`);
+      console.log(`${this.cards[i].getCardNumber()} of ${this.cards[i].cardSuit}`);
     }
   }
   /**
@@ -72,12 +90,12 @@ class Deck {
 
 
 class Player {
-  // so you can't cheat 
+  // so you can't cheat
   #score
 
   /**
    * Constructor
-   * @param {string} name 
+   * @param {string} name
    */
   constructor(name){
     this.name = name;
@@ -91,7 +109,7 @@ class Player {
   getHand(){
     let handString = ''
     for(let card of this.hand){
-      handString += card.cardNumber + ' of ' + card.cardSuit + ' ';
+      handString += card.getCardNumber() + ' of ' + card.cardSuit + ' ';
     }
     return handString;
   }
@@ -132,8 +150,8 @@ class Player {
 
 /**
  * compares two cards to see which is the winner
- * @param {Card} card1 
- * @param {Card} card2 
+ * @param {Card} card1
+ * @param {Card} card2
  * @returns winning card or 0 if tie
  */
 function compareCards(card1,card2){
@@ -161,15 +179,15 @@ console.log(`Player ${playerTwo.name} hand is: ${playerTwo.getHand()}`)
 for (let i = 0; i < deckOfCards.cards.length/2; i++) {
   let playerOneCard = playerOne.hand[i];
   let playerTwoCard = playerTwo.hand[i];
-  console.log(`Player ${playerOne.name} plays ${playerOneCard.cardNumber} of ${playerOneCard.cardSuit}`);
-  console.log(`Player ${playerTwo.name} plays ${playerTwoCard.cardNumber} of ${playerTwoCard.cardSuit}`);
+  console.log(`Player ${playerOne.name} plays ${playerOneCard.getCardNumber()} of ${playerOneCard.cardSuit}`);
+  console.log(`Player ${playerTwo.name} plays ${playerTwoCard.getCardNumber()} of ${playerTwoCard.cardSuit}`);
   winningCard = compareCards(playerOne.hand[i],playerTwo.hand[i]);
   if(winningCard !== 0 && playerOne.hand.includes(winningCard)){
     playerOne.incrementScore();
-    console.log(`Winning card was ${winningCard.cardNumber} of ${winningCard.cardSuit} held by player: ${playerOne.name}`);
+    console.log(`Winning card was ${winningCard.getCardNumber()} of ${winningCard.cardSuit} held by player: ${playerOne.name}`);
   } else if (winningCard !== 0 && playerTwo.hand.includes(winningCard)) {
     playerTwo.incrementScore();
-    console.log(`Winning card was ${winningCard.cardNumber} of ${winningCard.cardSuit} held by player: ${playerTwo.name}`);
+    console.log(`Winning card was ${winningCard.getCardNumber()} of ${winningCard.cardSuit} held by player: ${playerTwo.name}`);
   } else {
     console.log(`There was no score for this turn`);
   }
