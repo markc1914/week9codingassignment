@@ -8,9 +8,9 @@ var assert = require('chai').assert;
 //var chai = require('chai');
 
 
- const Card = require('../wargame').Card
- const Deck = require('../wargame').Deck
- const Player = require('../wargame').Player
+ const Card = require('../wargame').Card;
+ const Deck = require('../wargame').Deck;
+ const Player = require('../wargame').Player;
  const compareCards = require('../wargame').compareCards
 
 
