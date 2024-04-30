@@ -56,15 +56,20 @@ function shuffleDeck(deck) {
 }
 
 class Player {
-  #hand
+  hand
   #score
   constructor(name){
     this.name = name;
     this.#score = 0;
+    this.hand = [];
   }
 
   getHand(){
-    return this.#hand;
+    let handString = ''
+    for(let card of this.hand){
+      handString += card.cardNumber + ' of ' + card.cardSuit + ' ';
+    }
+    return handString;
   }
 
   getScore(){
@@ -80,7 +85,7 @@ class Player {
    * @param {Card} card
    */
   addCardtoHand(card){
-    this.#hand.push(card);
+    this.hand.push(card);
   }
 
   /**
@@ -88,51 +93,71 @@ class Player {
    * @param {card} card
    */
   removeCardFromHand(card) {
-    if(this.#hand.includes(card)) {
-      this.#hand.splice(this.#hand.indexOf(card),1);
+    if(this.hand.includes(card)) {
+      this.hand.splice(this.hand.indexOf(card),1);
     }
   }
 }
 
 function compareCards(card1,card2){
-  if (card1.getCardNumber() > card2.getCardNumber()){
+  if (card1.cardNumber > card2.cardNumber){
     return card1;
-  }else if (card2.getCardNumber() > card1.getCardNumber()){
+  }else if (card2.cardNumber > card1.cardNumber){
     return card2;
   }
   return 0;
 }
-
-function createWarHand(hand,cardsToPull){
-  let warHand = []
-  for (let i = 1; i <= cardsToPull; i++){
-    warHand.push(hand[hand.length-i]);
-    hand.pop();
+/**
+ *
+ * @param {Player} playerOne
+ * @param {Player} playerTwo
+ * @param {Deck} deck
+ */
+function dealCards (playerOne, playerTwo, deck){
+  for(let i = 0; i < deck.cards.length; i++) {
+    if (i%2!==0){
+      playerOne.addCardtoHand(deck.cards[i]);
+    }else {
+      playerTwo.addCardtoHand(deck.cards[i]);
+    }
   }
-  return warHand;
-}
-
-function declareWar(hand1,hand2){
-  let hand1CardsToPull = 4;
-  let hand2CardsToPull = 4;
-  let warHand1 = [];
-  let warHand2 = [];
-  if (hand1.length < warSize) {
-    hand1CardsToPull = hand1.length;
-  }
-  if (hand2.length < warSize) {
-    hand2CardsToPull = hand2.length;
-  }
-  warHand1 = createWarHand(hand1,hand1CardsToPull);
-  warHand2 = createWarHand(hand2CardsToPull);
-
-  return compareCards(warHand1[warHand1.length-1],warHand2[warHand2.length-1]);
 }
 
 let deckOfCards = new Deck();
 let playerOne = new Player("Mark");
-let Player2 = new Player("CPU");
+let playerTwo = new Player("CPU");
 console.log(`Deck has ${deckOfCards.cards.length} cards`);
 console.log(deckOfCards.cards);
 deckOfCards.cards = shuffleDeck(deckOfCards.cards);
 console.log(deckOfCards.cards);
+dealCards(playerOne,playerTwo,deckOfCards);
+
+console.log(`Player ${playerOne.name} hand is: ${playerOne.getHand()}`)
+console.log(`Player ${playerTwo.name} hand is: ${playerTwo.getHand()}`)
+
+for (let i = 0; i < deckOfCards.cards.length/2; i++) {
+  let playerOneCard = playerOne.hand[i];
+  let playerTwoCard = playerTwo.hand[i];
+  console.log(`Player ${playerOne.name} plays ${playerOneCard.cardNumber} of ${playerOneCard.cardSuit}`);
+  console.log(`Player ${playerTwo.name} plays ${playerTwoCard.cardNumber} of ${playerTwoCard.cardSuit}`);
+  winningCard = compareCards(playerOne.hand[i],playerTwo.hand[i]);
+  if(winningCard !== 0 && playerOne.hand.includes(winningCard)){
+    playerOne.incrementScore();
+    console.log(`Winning card was ${winningCard.cardNumber} of ${winningCard.cardSuit} held by player: ${playerOne.name}`);
+  } else if (winningCard !== 0 && playerTwo.hand.includes(winningCard)) {
+    playerTwo.incrementScore();
+    console.log(`Winning card was ${winningCard.cardNumber} of ${winningCard.cardSuit} held by player: ${playerTwo.name}`);
+  } else {
+    console.log(`There was no score for this turn`);
+  }
+}
+console.log(`Final score is Player: ${playerOne.name} Score: ${playerOne.getScore()}
+Player: ${playerTwo.name} Score:${playerTwo.getScore()}`);
+if (playerOne.getScore() > playerTwo.getScore()){
+  console.log(`Player: ${playerOne.name} wins`);
+} else if (playerTwo.getScore() > playerOne.getScore()) {
+  console.log(`Player: ${playerTwo.name} wins`);
+} else {
+  console.log(`It was a tie!!!`);
+}
+console.log('Game Over');
