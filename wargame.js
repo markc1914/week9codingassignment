@@ -9,7 +9,7 @@ const suits = ['spades', 'diamonds', 'clubs', 'hearts'];
 
 class Card {
   /**
-   *
+   * Constructor
    * @param {Integer} number
    * @param {String} suit
    */
@@ -21,7 +21,9 @@ class Card {
 }
 
 class Deck {
-
+  /**
+   * constructor
+   */
   constructor() {
     this.cards = [];
     //initialize deck
@@ -70,14 +72,22 @@ class Deck {
 
 
 class Player {
-  hand
+  // so you can't cheat 
   #score
+
+  /**
+   * Constructor
+   * @param {string} name 
+   */
   constructor(name){
     this.name = name;
     this.#score = 0;
     this.hand = [];
   }
-
+  /**
+   * Builds a string of the player's hand
+   * @returns a string representing the player's hand
+   */
   getHand(){
     let handString = ''
     for(let card of this.hand){
@@ -86,10 +96,17 @@ class Player {
     return handString;
   }
 
+  /**
+   * gets player score
+   * @returns the current score
+   */
   getScore(){
     return this.#score;
   }
 
+  /**
+   * adds one to players current score
+   */
   incrementScore(){
     this.#score +=1;
   }
@@ -113,6 +130,12 @@ class Player {
   }
 }
 
+/**
+ * compares two cards to see which is the winner
+ * @param {Card} card1 
+ * @param {Card} card2 
+ * @returns winning card or 0 if tie
+ */
 function compareCards(card1,card2){
   if (card1.cardNumber > card2.cardNumber){
     return card1;
@@ -122,17 +145,19 @@ function compareCards(card1,card2){
   return 0;
 }
 
-
+//initialize
 let deckOfCards = new Deck();
 let playerOne = new Player("Mark");
 let playerTwo = new Player("CPU");
-console.log(`Deck has ${deckOfCards.cards.length} cards`);
-deckOfCards.shuffleDeck();
+console.log(`Deck has ${deckOfCards.cards.length} cards`); //should be 52 cards
+deckOfCards.shuffleDeck(); //ensure the deal is random
 console.log(deckOfCards.cards);
+//deal cards to players
 deckOfCards.dealCards(playerOne,playerTwo);
 console.log(`Player ${playerOne.name} hand is: ${playerOne.getHand()}`)
 console.log(`Player ${playerTwo.name} hand is: ${playerTwo.getHand()}`)
 
+//play the game for 26 turns
 for (let i = 0; i < deckOfCards.cards.length/2; i++) {
   let playerOneCard = playerOne.hand[i];
   let playerTwoCard = playerTwo.hand[i];
@@ -149,6 +174,8 @@ for (let i = 0; i < deckOfCards.cards.length/2; i++) {
     console.log(`There was no score for this turn`);
   }
 }
+
+//determine the final scores and winner
 console.log(`Final score is Player: ${playerOne.name} Score: ${playerOne.getScore()}
 Player: ${playerTwo.name} Score:${playerTwo.getScore()}`);
 if (playerOne.getScore() > playerTwo.getScore()){
@@ -160,6 +187,9 @@ if (playerOne.getScore() > playerTwo.getScore()){
 }
 console.log('Game Over');
 
+/**
+ * module exports (for unit testing)
+ */
 module.exports = {
   Card:Card,
   Deck:Deck,
