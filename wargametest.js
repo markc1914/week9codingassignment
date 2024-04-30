@@ -1,5 +1,5 @@
 /**
- * test code for war
+ * test code for Game of war
  *
  */
 
@@ -23,7 +23,7 @@ const assert = chai.assert;
       deck1 = new Deck();
       deck2 = new Deck();
       expect(deck1.cards).to.deep.equal(deck2.cards);
-      deck1.cards = shuffleDeck(deck1.cards);
+      deck1.shuffleDeck();
       sameOrder = true;
       let i = 0;
       while (i < deck1.cards.length && sameOrder){
@@ -34,6 +34,27 @@ const assert = chai.assert;
         i++;
       }
       expect(sameOrder).to.equal(false);
+    })
+  })
+
+  describe('Deal the cards and prove they are different hands', () =>{
+    it('Should deal the deck between two players and each should have a different hand', () =>{
+      let deck = new Deck();
+      deck.shuffleDeck();
+      let playerOne = new Player("Joe");
+      let playerTwo = new Player("Steve");
+      let handIsUnique = true;
+      let i = 0;
+      deck.dealCards(playerOne,playerTwo);
+//      expect(deck.cards.length).to.equal(0);
+      expect(playerOne.hand.length).to.equal(playerTwo.hand.length);
+      while (i < playerOne.hand.length && handIsUnique) {
+        if(playerTwo.hand.includes(playerOne.hand[i])){
+          handIsUnique = false;
+        }
+        i++;
+      }
+      expect(handIsUnique).to.equal(true);
     })
   })
 })

@@ -3,12 +3,11 @@
  */
 
 const aceValue = 14;
+//face cards are 11-13 and Ace is 14
 const validNumbers = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 const suits = ['spades', 'diamonds', 'clubs', 'hearts'];
-const warSize = 4;
 
 class Card {
-
   /**
    *
    * @param {Integer} number
@@ -22,9 +21,9 @@ class Card {
 }
 
 class Deck {
-  cards = [];
 
   constructor() {
+    this.cards = [];
     //initialize deck
     for(let i = 0; i < validNumbers.length; i++){
       for(let j = 0 ; j < suits.length; j++) {
@@ -37,23 +36,38 @@ class Deck {
    */
   printDeck() {
     for (let i = 0; i < this.cards.length; i++){
-      console.log(`${this.cards[i].getCardNumber} of ${this.cards[i].getCardSuit}`);
+      console.log(`${this.cards[i].cardNumber} of ${this.cards[i].cardSuit}`);
+    }
+  }
+  /**
+   * Shuffles deck using algorithm I found at
+   * https://www.freecodecamp.org/news/how-to-shuffle-an-array-of-items-using-javascript-or-typescript/
+   */
+  shuffleDeck() {
+    for (let i = this.cards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
+    }
+  }
+
+  /**
+   * Deals the cards from the deck to the players using array operations
+   * @param {Player} playerOne - the first player
+   * @param {Player} playerTwo - the second player
+   */
+  dealCards(playerOne, playerTwo) {
+    let deckLength = this.cards.length
+    for(let i = 0; i < deckLength; i++) {
+      if (i%2!==0){
+        playerOne.addCardtoHand(this.cards[i]);
+      }else {
+        playerTwo.addCardtoHand(this.cards[i]);
+      }
+      this.cards.splice[i,1];
     }
   }
 }
 
-/**
- * Shuffles deck using algorithm I found at
- * https://www.freecodecamp.org/news/how-to-shuffle-an-array-of-items-using-javascript-or-typescript/
- * @param {Deck} deck of cards
- */
-function shuffleDeck(deck) {
-  for (let i = deck.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [deck[i], deck[j]] = [deck[j], deck[i]];
-  }
-  return deck;
-}
 
 class Player {
   hand
@@ -107,31 +121,15 @@ function compareCards(card1,card2){
   }
   return 0;
 }
-/**
- *
- * @param {Player} playerOne
- * @param {Player} playerTwo
- * @param {Deck} deck
- */
-function dealCards (playerOne, playerTwo, deck){
-  for(let i = 0; i < deck.cards.length; i++) {
-    if (i%2!==0){
-      playerOne.addCardtoHand(deck.cards[i]);
-    }else {
-      playerTwo.addCardtoHand(deck.cards[i]);
-    }
-  }
-}
+
 
 let deckOfCards = new Deck();
 let playerOne = new Player("Mark");
 let playerTwo = new Player("CPU");
 console.log(`Deck has ${deckOfCards.cards.length} cards`);
+deckOfCards.shuffleDeck();
 console.log(deckOfCards.cards);
-deckOfCards.cards = shuffleDeck(deckOfCards.cards);
-console.log(deckOfCards.cards);
-dealCards(playerOne,playerTwo,deckOfCards);
-
+deckOfCards.dealCards(playerOne,playerTwo);
 console.log(`Player ${playerOne.name} hand is: ${playerOne.getHand()}`)
 console.log(`Player ${playerTwo.name} hand is: ${playerTwo.getHand()}`)
 
