@@ -1,11 +1,18 @@
+var expect = require('chai').expect;
+var assert = require('chai').assert;
 /**
  * test code for Game of war
  *
  */
 
+//var chai = require('chai');
 
-const expect = chai.expect;
-const assert = chai.assert;
+
+ const Card = require('../wargame').Card
+ const Deck = require('../wargame').Deck
+ const Player = require('../wargame').Player
+ const compareCards = require('../wargame').compareCards
+
 
  describe('Week 9 War Game:',() => {
   describe('Compare two cards', () =>{

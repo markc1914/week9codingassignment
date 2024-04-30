@@ -159,3 +159,10 @@ if (playerOne.getScore() > playerTwo.getScore()){
   console.log(`It was a tie!!!`);
 }
 console.log('Game Over');
+
+module.exports = {
+  Card:Card,
+  Deck:Deck,
+  Player:Player,
+  compareCards:compareCards
+}
