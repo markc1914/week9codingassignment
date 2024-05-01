@@ -1,5 +1,4 @@
 const Card = require('./Card').Card;
-const validNumbers = require('./Card').validNumbers;
 
 class Player {
   // so you can't cheat
@@ -21,7 +20,7 @@ class Player {
   getHand(){
     let handString = ''
     for(let card of this.hand){
-      handString += card.getCardNumber() + ' of ' + card.cardSuit + ' ';
+      handString += card.getCardNumber() +  card.cardSuit + ' ';
     }
     return handString;
   }

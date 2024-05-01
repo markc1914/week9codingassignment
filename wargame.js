@@ -57,12 +57,4 @@ if (playerOne.getScore() > playerTwo.getScore()){
 }
 console.log('Game Over');
 
-/**
- * module exports (for unit testing)
- */
-module.exports = {
-  Card:Card,
-  Deck:Deck,
-  Player:Player,
-  compareCards:compareCards
-}
+

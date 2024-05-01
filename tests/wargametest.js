@@ -10,15 +10,24 @@ var assert = require('chai').assert;
 const Card = require('../Card').Card;
 const Deck = require('../Deck').Deck;
 const compareCards = require('../Deck').compareCards;
+const { suits } = require('../Card');
 const Player = require('../Player');
 
 
 
 describe('Week 9 War Game:', () => {
+  describe ('Create Card requires correct input', () => {
+    it('should fail with invalid input',()=>{
+      expect(() => new Card(0,'♠️')).to.throw(Error)
+      expect(() => new Card(3,'')).to.throw(Error)
+      expect(() => new Card(14,'♠️')).to.not.throw(Error)
+        })
+  })
+
   describe('Compare two cards', () => {
     it('Should Give the correct winning card', () => {
-      card1 = new Card(2, 'spades');
-      card2 = new Card(3, 'clubs');
+      card1 = new Card(2, suits()[0]);
+      card2 = new Card(3, suits()[2]);
       winningCard = compareCards(card1, card2);
       expect(winningCard).to.deep.equal(card2);
       winningCard = compareCards(card1, card1);

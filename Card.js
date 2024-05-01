@@ -1,8 +1,8 @@
-const suits = function () {
+const suits = () => {
   return ['♠️', '♦️', '♣️', '❤️'];
 }
 
-const validNumbers = function () {
+const validNumbers =  () => {
   return [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 }
 
@@ -13,8 +13,13 @@ class Card {
    * @param {String} suit
    */
   constructor(number, suit) {
-      this.cardNumber = number;
-      this.cardSuit = suit;
+    //put this here so we can do some safety checks
+    if(validNumbers().indexOf(number) >=0 && suits().indexOf(suit) >=0) {
+        this.cardNumber = number;
+        this.cardSuit = suit;
+    } else {
+      throw new Error("Invalid Input");
+    }
   }
 
   /**
@@ -24,13 +29,13 @@ class Card {
   getCardNumber() {
     switch(this.cardNumber) {
       case 11 :
-        return 'Jack';
+        return 'J';
       case 12 :
-        return 'Queen';
+        return 'Q';
       case 13 :
-        return 'King';
+        return 'K';
       case 14 :
-        return 'Ace';
+        return 'A';
       default :
       return this.cardNumber;
     }

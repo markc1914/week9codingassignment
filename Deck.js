@@ -60,7 +60,7 @@ class Deck {
  * @param {Card} card2
  * @returns winning card or 0 if tie
  */
-  const compareCards = function (card1,card2){
+  const compareCards =  (card1,card2) => {
   if (card1.cardNumber > card2.cardNumber){
     return card1;
   }else if (card2.cardNumber > card1.cardNumber){
