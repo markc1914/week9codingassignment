@@ -7,10 +7,11 @@
 var expect = require('chai').expect;
 var assert = require('chai').assert;
 
-const Card = require('../wargame').Card;
-const Deck = require('../wargame').Deck;
-const Player = require('../wargame').Player;
-const compareCards = require('../wargame').compareCards
+const Card = require('../Card').Card;
+const Deck = require('../Deck').Deck;
+const compareCards = require('../Deck').compareCards;
+const Player = require('../Player');
+
 
 
 describe('Week 9 War Game:', () => {
