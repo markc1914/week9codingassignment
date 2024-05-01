@@ -42,14 +42,18 @@ class Deck {
    * @param {Player} playerTwo - the second player
    */
     dealCards(playerOne, playerTwo) {
-      let deckLength = this.cards.length
-      for(let i = 0; i < deckLength; i++) {
-        if (i%2!==0){
-          playerOne.addCardtoHand(this.cards[i]);
-        }else {
-          playerTwo.addCardtoHand(this.cards[i]);
+      if(playerOne !== null && playerTwo !== null) {
+        let deckLength = this.cards.length
+        for(let i = 0; i < deckLength; i++) {
+          if (i%2!==0){
+            playerOne.addCardtoHand(this.cards[i]);
+          }else {
+            playerTwo.addCardtoHand(this.cards[i]);
+          }
+          this.cards.splice[i,1];
         }
-        this.cards.splice[i,1];
+      } else {
+        throw new Error("Invalid Input");
       }
     }
 

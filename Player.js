@@ -9,9 +9,13 @@ class Player {
    * @param {string} name
    */
   constructor(name){
-    this.name = name;
-    this.#score = 0;
-    this.hand = [];
+    if (name !== null && typeof name === 'string' && name.length > 0 ) {
+      this.name = name;
+      this.#score = 0;
+      this.hand = [];
+    } else {
+      throw new Error ("Invalid input");
+    }
   }
   /**
    * Builds a string of the player's hand

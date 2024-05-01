@@ -20,10 +20,22 @@ describe('Week 9 War Game:', () => {
     it('should fail with invalid input',()=>{
       expect(() => new Card(0,'♠️')).to.throw(Error)
       expect(() => new Card(3,'')).to.throw(Error)
+     })
+    it('should pass with correct input',()=>{
       expect(() => new Card(14,'♠️')).to.not.throw(Error)
-        })
+    })
   })
 
+    describe('Create Player requires correct input', () => {
+      it('should fail wiht invalid input', () =>{
+        expect(() => new Player()).to.throw(Error)
+        expect(() => new Player('')).to.throw(Error)
+      })
+      it('should pass with correct input',()=>{
+        expect(() => new Player('Joe')).to.not.throw(Error)
+      })
+        
+    })
   describe('Compare two cards', () => {
     it('Should Give the correct winning card', () => {
       card1 = new Card(2, suits()[0]);
@@ -55,6 +67,15 @@ describe('Week 9 War Game:', () => {
   })
 
   describe('Deal the cards and prove they are different hands', () => {
+    it('Should fail if players are not valid', () => {
+      let deck = new Deck();
+      deck.shuffleDeck();
+      expect(() => deck.dealCards()).to.throw(Error)
+      let playerOne = new Player("Gary");
+      expect(() => deck.dealCards(playerOne)).to.throw(Error);
+      expect(() => deck.dealCards(null,playerOne)).to.throw(Error)     
+    })
+    
     it('Should deal the deck between two players and each should have a different hand', () => {
       let deck = new Deck();
       deck.shuffleDeck();
