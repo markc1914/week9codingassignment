@@ -8,7 +8,6 @@ const aceValue = 14;
 //const suits = ['♠️', '♦️', '♣️', '❤️'];
 
 const Card = require('./Card').Card;
-const validNumbers = require('./Card').validNumbers;
 const Deck = require('./Deck').Deck;
 const compareCards = require('./Deck').compareCards;
 const Player = require('./Player');
