@@ -11,9 +11,9 @@ class Deck {
   constructor() {
     this.cards = [];
     //initialize deck
-    for(let i = 0; i < validNumbers().length; i++){
-      for(let j = 0 ; j < suits().length; j++) {
-        this.cards.push(new Card(validNumbers()[i],suits()[j]));
+    for(const validNumber of validNumbers()){
+      for(const suit of suits()) {
+        this.cards.push(new Card(validNumber,suit));
       }
     }
   }
@@ -21,8 +21,8 @@ class Deck {
    * displays the deck
    */
   printDeck() {
-    for (let i = 0; i < this.cards.length; i++){
-      console.log(`${this.cards[i].getCardNumber()} of ${this.cards[i].cardSuit}`);
+    for (const element of this.cards){
+      console.log(`${element.getCardNumber()} of ${element.cardSuit}`);
     }
   }
   /**
@@ -50,7 +50,6 @@ class Deck {
           }else {
             playerTwo.addCardtoHand(this.cards[i]);
           }
-          this.cards.splice[i,1];
         }
       } else {
         throw new Error("Invalid Input");

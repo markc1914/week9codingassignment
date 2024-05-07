@@ -33,7 +33,7 @@ for (let i = 0; i < deckOfCards.cards.length/2; i++) {
   let playerTwoCard = playerTwo.hand[i];
   console.log(`Player ${playerOne.name} plays ${playerOneCard.getCardNumber()} of ${playerOneCard.cardSuit}`);
   console.log(`Player ${playerTwo.name} plays ${playerTwoCard.getCardNumber()} of ${playerTwoCard.cardSuit}`);
-  winningCard = compareCards(playerOne.hand[i],playerTwo.hand[i]);
+  let winningCard = compareCards(playerOne.hand[i],playerTwo.hand[i]);
   if(winningCard !== 0 && playerOne.hand.includes(winningCard)){
     playerOne.incrementScore();
     console.log(`Winning card was ${winningCard.getCardNumber()} of ${winningCard.cardSuit} held by player: ${playerOne.name}`);
@@ -56,5 +56,3 @@ if (playerOne.getScore() > playerTwo.getScore()){
   console.log(`It was a tie!!!`);
 }
 console.log('Game Over');
-
-
